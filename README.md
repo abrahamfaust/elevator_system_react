@@ -1,54 +1,84 @@
-# React + TypeScript + Vite
+# 🏢 Elevator System Simulation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sophisticated elevator system simulation built with React and TypeScript that demonstrates efficient elevator scheduling algorithms and real-time visualization.
 
-Currently, two official plugins are available:
+![Elevator System](./public/screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🏗️ Create multiple buildings with customizable number of floors (2-20) and elevators (1-5)
+- 🎬 Real-time animation of elevator movement with smooth transitions
+- 🧠 Intelligent elevator scheduling algorithm that minimizes wait times
+- ⏱️ Elevator call timer displays estimated wait time
+- 🚪 Realistic door opening/closing animations
+- 🔊 Sound effects that can be toggled on/off
+- 🎮 Individual building controls for starting/stopping/resetting elevators
+- 📱 Fully responsive design
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🏗️ Architecture
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+The project follows object-oriented programming principles and employs several design patterns:
+
+- **🏭 Factory Pattern**: Used `BuildingFactory` to create and manage buildings, floors and elevators
+- **🔄 Model-View Architecture**: Separation between data models and UI components
+- **👁️ Observer Pattern**: Components observe and respond to model state changes
+
+### 🧩 Core Components
+
+- **📊 Models**: `Building`, `Floor`, and `Elevator` classes encapsulate core business logic
+- **⚙️ ElevatorScheduler**: Implements the elevator scheduling algorithm
+- **🖌️ React Components**: Building, Floor, Elevator, ElevatorSystem components handle the UI
+
+### 🧮 Scheduler Algorithm
+
+The elevator scheduling algorithm uses a shortest estimated time approach:
+1. When a floor calls an elevator, the system calculates estimated arrival time for each elevator
+2. The elevator with the shortest estimated arrival time is selected
+3. Each elevator maintains a queue of floor requests
+4. Estimated times are continuously updated based on current elevator positions and queues
+
+## 💻 Technologies
+
+- ⚛️ React 19
+- 📘 TypeScript 5.7
+- ⚡ Vite 6.3
+- 🎨 CSS for animations and styling
+
+## 🚀 Getting Started
+
+### 📋 Prerequisites
+
+- Node.js 18+ and npm
+
+### 🔧 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/abrahamfaust/elevator-system-react.git
+
+# Navigate to project directory
+cd elevator_system_react
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Visit `http://localhost:5173` to see the application running.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📖 Usage
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. Set the desired number of floors and elevators using the controls at the top
+2. Click "Create Building" to add a new building to the simulation
+3. Click on floor buttons to call elevators
+4. Use the building settings (gear icon) to:
+   - ▶️ Start/stop elevator movements
+   - 🔄 Change building dimensions
+   - 🏠 Reset elevators to ground floor
+   - 🗑️ Delete buildings
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
