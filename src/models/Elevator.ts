@@ -18,7 +18,7 @@ export enum ElevatorState {
     private state: ElevatorState;
     private direction: ElevatorDirection;
     private queue: number[];
-    static elevatorSound: boolean = false;
+    static elevatorSound: boolean = true;
     
 
     static toggleElevatorSound(): void {

@@ -71,13 +71,14 @@ button:disabled {
 }
 
 .elevator-sound-button {
-  position: absolute ;
+  position: fixed; ;
   top: 10px;
   right: 10px;
   padding: 10px 20px;
   display: flex;
   alignItems: center;
   gap: 10px;
+  z-index: 1000;
 }
 
 .elevator-sound-button span {
@@ -127,13 +128,13 @@ button:disabled {
 /* סגנונות לקומות */
 .floor {
   position: relative;
-  height: 110px; /* כפי שהוגדר בדרישות - כולל הפס השחור */
+  height: var(--floor-height); /* כפי שהוגדר בדרישות - כולל הפס השחור */
   border-bottom: 7px solid black; /* הפס השחור בין הקומות */
 }
 
 /* סגנון רקע הלבנים לקומה */
 .floor-body {
-  height: 103px; /* 110px - 7px של הפס השחור */
+  height: calc(var(--floor-height) - 7px); /* 110px - 7px של הפס השחור */
   position: relative;
   display: flex;
   align-items: center;
@@ -146,27 +147,61 @@ button:disabled {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: var(
-    --elevator-width
-  ); 
+  width: var(--elevator-width); 
   display: flex;
   justify-content: center;
 }
 
 .elevator {
-  width: calc(
-    var(--elevator-width) - 10px
-  ); 
-  height: 101px;
+  width: var(--elevator-width);
+  height: calc(var(--floor-height) - 10px);
   position: absolute;
   background-color: rgb(171, 178, 193);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: top 0.5s linear; /* אנימציה חלקה עם תנועה קבועה */
+  transition: top 0.5s linear; /* Animation for elevator movement */
   border: 1px solid green;
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  overflow: hidden; /* Contains the doors */
+}
+
+/* Elevator door styles */
+.elevator-door {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  background-color: #8a8a8a; /* Changed from #444 to a lighter gray */
+  top: 0;
+  transition: transform 1s ease-in-out;
+}
+
+.elevator-door.left {
+  left: 0;
+  border-right: 2px solid #666; /* Changed from #222 to a lighter color */
+}
+
+.elevator-door.right {
+  right: 0;
+  border-left: 2px solid #666; /* Changed from #222 to a lighter color */
+}
+
+/* Door states */
+.doors-closed .elevator-door.left {
+  transform: translateX(0);
+}
+
+.doors-closed .elevator-door.right {
+  transform: translateX(0);
+}
+
+.doors-open .elevator-door.left {
+  transform: translateX(-100%);
+}
+
+.doors-open .elevator-door.right {
+  transform: translateX(100%);
 }
 
 /* סגנון רקע לבנים לקומה */

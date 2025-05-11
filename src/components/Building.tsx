@@ -154,7 +154,7 @@ const Building: React.FC<BuildingProps> = ({
       className="building"
       style={{ 
         height: `${numFloors * system.FLOOR_HEIGHT}px`,
-        width: `${numElevators * system.ELEVATOR_WIDTH + 132}px` // רוחב פיר מעלית + מרווח לכפתורים
+        width: `calc(${numElevators} * var(--elevator-width) + 132px)` // רוחב פיר מעלית + מרווח לכפתורים
       }}
     >
       {/* Floating settings button */}

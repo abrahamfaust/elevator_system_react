@@ -36,5 +36,5 @@ export function useSystemCssVars(): void {
     
     // This will run once when the component mounts
     // No cleanup needed since we're just setting CSS variables
-  }, []); // Empty dependency array means this runs once on mount
+  }, [FLOOR_HEIGHT, ELEVATOR_WIDTH]); // Empty dependency array means this runs once on mount
 }
