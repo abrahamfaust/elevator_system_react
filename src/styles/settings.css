@@ -1,0 +1,163 @@
+/* Floating settings button */
+.building-settings-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+.building-settings-button:hover {
+  transform: rotate(30deg);
+  background-color: #f5f5f5;
+}
+
+/* Settings modal */
+.building-settings-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9;
+  min-width: 300px;
+  max-width: 90%;
+  direction: rtl;
+}
+
+.building-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.building-settings-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.building-settings-header button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.building-settings-content {
+  padding: 15px;
+}
+
+.settings-group {
+  margin-bottom: 20px;
+}
+
+.settings-group h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.settings-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Hide the actual radio button input */
+.settings-controls label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Style the labels to look like buttons */
+.settings-controls label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: rgb(68, 204, 175);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0 5px;
+  position: relative;
+  opacity: 1; /* Default to slightly transparent */
+}
+
+/* Style for the active (checked) radio button */
+.settings-controls label.active-radio {
+  opacity: 0.7;
+  background-color: #5cbf9c;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(68, 204, 175);
+}
+
+/* Style for the reset button active state */
+.reset-active {
+  background-color: #ff7f50 !important;
+  transform: scale(0.95);
+  transition: all 0.2s ease;
+}
+
+/* Hover effect for the labels */
+.settings-controls label:hover {
+  background-color: #5cbf9c;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+/* Style for the span inside the label */
+.settings-controls label span {
+  pointer-events: none;
+}
+
+.settings-input-group {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.settings-input-group input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.settings-input-group button {
+  grid-column: span 2;
+  margin-top: 10px;
+}
+
+.danger-zone {
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  width: 100%;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}

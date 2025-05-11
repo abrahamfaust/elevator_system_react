@@ -1,0 +1,295 @@
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+#root {
+  padding: 0 2rem;
+}
+
+.container {
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.controls label {
+  margin-left: 0.5rem;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.controls input {
+  padding: 0.5rem;
+  width: 80px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: rgb(68, 204, 175);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+button:hover {
+  background-color: #5cbf9c;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.elevator-sound-button {
+  position: absolute ;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  display: flex;
+  alignItems: center;
+  gap: 10px;
+}
+
+.elevator-sound-button span {
+  background-color: white; 
+  color: elevatorSound ? "#0066cc" : "#666666";
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.buildings-container {
+  display: flex;
+  min-width: 320px;
+  min-height: 75vh;
+  gap: 2rem;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  background: linear-gradient(
+    to bottom,
+    #87ceeb 0%,
+    /* sky blue */ #b0e0e6 50%,
+    /* powder blue */ #228b22 95%,
+    /* forest green */ #32cd32 100% /* lime green */
+  );
+  padding: 3rem 1rem;
+  border-radius: 16px;
+}
+
+.building {
+  display: flex;
+  flex-direction: column-reverse;
+  border-radius: 8px;
+  position: relative;
+  background-color: silver;
+  background-image: linear-gradient(335deg, #e0e0e0 18px, transparent 18px),
+    linear-gradient(155deg, #ffffff 18px, transparent 18px),
+    linear-gradient(335deg, #e0e0e0 18px, transparent 18px),
+    linear-gradient(155deg, #ffffff 18px, transparent 18px);
+  background-size: 48px 48px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+}
+
+/* סגנונות לקומות */
+.floor {
+  position: relative;
+  height: 110px; /* כפי שהוגדר בדרישות - כולל הפס השחור */
+  border-bottom: 7px solid black; /* הפס השחור בין הקומות */
+}
+
+/* סגנון רקע הלבנים לקומה */
+.floor-body {
+  height: 103px; /* 110px - 7px של הפס השחור */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: 10px;
+}
+
+/* סגנונות למעלית */
+.elevator-shaft {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(
+    --elevator-width
+  ); 
+  display: flex;
+  justify-content: center;
+}
+
+.elevator {
+  width: calc(
+    var(--elevator-width) - 10px
+  ); 
+  height: 101px;
+  position: absolute;
+  background-color: rgb(171, 178, 193);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: top 0.5s linear; /* אנימציה חלקה עם תנועה קבועה */
+  border: 1px solid green;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+/* סגנון רקע לבנים לקומה */
+.floor-button {
+  background-color: silver;
+  background-image: linear-gradient(335deg, #b00 23px, transparent 23px),
+    linear-gradient(155deg, #d00 23px, transparent 23px),
+    linear-gradient(335deg, #b00 23px, transparent 23px),
+    linear-gradient(155deg, #d00 23px, transparent 23px);
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+  height: 100%;
+  padding: 0px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+/* סגנונות כפתור מתכתי */
+.metal {
+  position: relative;
+  margin: 0px auto;
+  outline: none;
+  font: bold 3.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  text-align: center;
+  color: hsla(0, 0%, 20%, 1);
+  text-shadow: hsla(0, 0%, 40%, 0.5) 0 -1px 0, hsla(0, 0%, 100%, 0.6) 0 2px 1px;
+  background-color: hsl(0, 0%, 90%);
+  box-shadow: inset hsla(0, 0%, 15%, 1) 0 0px 0px 4px,
+     inset hsla(0, 0%, 15%, 0.8) 0 -1px 5px 4px,
+     inset hsla(0, 0%, 0%, 0.25) 0 -1px 0px 7px,
+     inset hsla(0, 0%, 100%, 0.7) 0 2px 1px 7px,
+     hsla(0, 0%, 0%, 0) 0 -5px 6px 4px,
+     hsla(0, 0%, 100%, 0) 0 5px 6px 4px;
+  transition: color 0.2s;
+  padding: 10px 15px;
+}
+
+.metal:hover {
+  background: #aaa;
+  background: -moz-linear-gradient(#aaa, #8c8c8c);
+  background: -webkit-linear-gradient(#aaa, #8c8c8c);
+  background: -o-linear-gradient(#aaa, #8c8c8c);
+  background: -ms-linear-gradient(#aaa, #8c8c8c);
+  background: linear-gradient(#aaa, #8c8c8c);
+}
+
+.metal:active {
+  color: hsl(210, 100%, 40%);
+  text-shadow: hsla(210, 100%, 20%, 0.3) 0 -1px 0, hsl(210, 100%, 85%) 0 2px 1px,
+    hsla(200, 100%, 80%, 1) 0 0 5px, hsla(210, 100%, 50%, 0.6) 0 0 20px;
+  box-shadow: inset hsla(210, 100%, 30%, 1) 0 0px 0px 4px,
+    /* border */ inset hsla(210, 100%, 15%, 0.4) 0 -1px 5px 4px,
+    /* soft SD */ inset hsla(210, 100%, 20%, 0.25) 0 -1px 0px 7px,
+    /* bottom SD */ inset hsla(210, 100%, 100%, 0.7) 0 2px 1px 7px,
+    /* top HL */ hsla(210, 100%, 75%, 0.8) 0 0px 3px 2px,
+    /* outer SD */ hsla(210, 50%, 40%, 0) 0 -5px 6px 4px,
+    /* outer SD */ hsla(210, 80%, 95%, 0) 0 5px 6px 4px; /* outer HL */
+}
+
+/* Linear ------------------------- */
+.metal.linear {
+  width: 100px;
+  font-size: 4em;
+  line-height: 0;
+  height: 80px;
+  border-radius: 0.5em;
+  background-image: -webkit-repeating-linear-gradient(
+      left,
+      hsla(0, 0%, 100%, 0) 0%,
+      hsla(0, 0%, 100%, 0) 6%,
+      hsla(0, 0%, 100%, 0.1) 7.5%
+    ),
+    -webkit-repeating-linear-gradient(left, hsla(0, 0%, 0%, 0) 0%, hsla(
+            0,
+            0%,
+            0%,
+            0
+          )
+          4%, hsla(0, 0%, 0%, 0.03) 4.5%),
+    -webkit-repeating-linear-gradient(left, hsla(0, 0%, 100%, 0) 0%, hsla(
+            0,
+            0%,
+            100%,
+            0
+          )
+          1.2%, hsla(0, 0%, 100%, 0.15) 2.2%),
+    linear-gradient(
+      180deg,
+      hsl(0, 0%, 78%) 0%,
+      hsl(0, 0%, 90%) 47%,
+      hsl(0, 0%, 78%) 53%,
+      hsl(0, 0%, 70%) 100%
+    );
+}
+
+/* צבע טקסט ירוק לכפתור פעיל */
+.active-button {
+  color: green;
+  border: 1px solid green;
+}
+
+.timer {
+  position: absolute;
+  top: 35%;
+  right: 8px;
+  transform: translateX(50%);
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 6px 10px;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+  border: 1px solid rgba(25, 25, 25, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.timer:empty {
+  display: none;
+}
