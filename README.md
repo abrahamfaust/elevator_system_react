@@ -2,7 +2,7 @@
 
 A sophisticated elevator system simulation built with React and TypeScript that demonstrates efficient elevator scheduling algorithms and real-time visualization.
 
-![Elevator System](./public/screenshot.png)
+![Elevator System](./screenshot.png)
 
 ## ✨ Features
 
