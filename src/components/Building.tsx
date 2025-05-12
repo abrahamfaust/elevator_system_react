@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Floor from './Floor';
 import Elevator from './Elevator';
-import { Building as BuildingModel } from '../models/Building';
+import { AbstractBuilding as BuildingModel } from '../models/AbstractBuilding';
 import { ElevatorScheduler } from '../services/ElevatorScheduler';
 import BuildingFactory from '../factories/BuildingFactory';
 import * as system from '../services/systemSettings';

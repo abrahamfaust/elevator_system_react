@@ -6,7 +6,7 @@ import * as system from "../services/systemSettings";
 import { Elevator } from "../models/Elevator";
 import "../styles/settings.css";
 
-export const ElevatorsSystem = () => {
+export const CitySystem = () => {
 
     const [buildings, setBuildings] = useState<TBuilding[]>([]);
     const [floorCount, setFloorCount] = useState<number>(system.DEFAULT_FLOORS);

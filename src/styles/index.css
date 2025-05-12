@@ -7,6 +7,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --elevator-speed: calc(var(--elevator-speed) / 1000s); /* Convert milliseconds to seconds */
 }
 
 body {
@@ -160,7 +161,7 @@ button:disabled {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: top 0.5s linear; /* Animation for elevator movement */
+  transition: top var(--elevator-speed) linear; /* Animation for elevator movement */
   border: 1px solid green;
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 

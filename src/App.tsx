@@ -1,9 +1,9 @@
-import { ElevatorsSystem } from "./components/ElevatorsSystem";
+import { CitySystem } from "./components/CitySystem";
 
 
 function App() {
   return (
-    <ElevatorsSystem/>
+    <CitySystem/>
   )
 }
 

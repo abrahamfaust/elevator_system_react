@@ -1,6 +1,5 @@
+import { AbstractBuilding } from '../models/AbstractBuilding';
 import { Building } from '../models/Building';
-import { Elevator } from '../models/Elevator';
-import { Floor } from '../models/Floor';
 import { ElevatorScheduler } from '../services/ElevatorScheduler';
 
 /**
@@ -9,33 +8,19 @@ import { ElevatorScheduler } from '../services/ElevatorScheduler';
  */
 class BuildingFactory {
   // Store existing building systems to maintain state across updates
-  private buildingSystems: Map<number, { building: Building; scheduler: ElevatorScheduler }> = new Map();
+  private buildingSystems: Map<number, { building: AbstractBuilding; scheduler: ElevatorScheduler }> = new Map();
 
   /**
    * יצירת בניין חדש עם קומות ומעליות
    */
-  createBuilding(id: number, numFloors: number, numElevators: number): Building {
+  private createBuilding(id: number, numFloors: number, numElevators: number): AbstractBuilding {
     return new Building(id, numFloors, numElevators);
-  }
-
-  /**
-   * יצירת קומה חדשה
-   */
-  createFloor(id: number, floorNumber: number): Floor {
-    return new Floor(id, floorNumber);
-  }
-
-  /**
-   * יצירת מעלית חדשה
-   */
-  createElevator(id: number, startingFloor: number = 0): Elevator {
-    return new Elevator(id, startingFloor);
   }
 
   /**
    * יצירת שירות תזמון מעליות לבניין מסוים
    */
-  createElevatorScheduler(building: Building): ElevatorScheduler {
+  private createElevatorScheduler(building: AbstractBuilding): ElevatorScheduler {
     return new ElevatorScheduler(building);
   }
 
@@ -43,7 +28,7 @@ class BuildingFactory {
    * יצירת מערכת בניין שלמה עם מתזמן מעליות
    */
   createBuildingSystem(id: number, numFloors: number, numElevators: number): {
-    building: Building;
+    building: AbstractBuilding;
     scheduler: ElevatorScheduler;
   } {
     // Check if we already have a system for this building id
@@ -97,7 +82,7 @@ class BuildingFactory {
    * עדכון מערכת בניין קיימת עם שמירה על מצב המעליות
    */
   updateBuildingSystem(id: number, numFloors: number, numElevators: number): {
-    building: Building;
+    building: AbstractBuilding;
     scheduler: ElevatorScheduler;
   } | null {
     const existingSystem = this.buildingSystems.get(id);

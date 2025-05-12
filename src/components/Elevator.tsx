@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { Elevator as ElevatorModel, ElevatorState } from '../models/Elevator';
-import { ELEVATOR_WIDTH } from '../services/systemSettings';
 
 interface ElevatorProps {
   elevator: ElevatorModel;

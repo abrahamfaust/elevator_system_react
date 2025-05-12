@@ -1,3 +1,5 @@
+import { ELEVATOR_DOOR_OPEN_TIME, ELEVATOR_SPEED } from "../services/systemSettings";
+
 export enum ElevatorState {
     IDLE = 'idle',
     MOVING = 'moving',
@@ -59,50 +61,38 @@ export enum ElevatorState {
     }
 
     clearQueue(): void {
-      this.queue = []; // ריקון התור
+      this.queue = []; 
       if (this.getCurrentFloor() !== 0) {
         this.targetFloor = 0; 
-      this.state = ElevatorState.MOVING; // קביעת מצב IDLE
-      this.direction = ElevatorDirection.DOWN; // קביעת כיוון NONE
+      this.state = ElevatorState.MOVING; 
+      this.direction = ElevatorDirection.DOWN; 
     }}
   
     getTargetFloor(): number | null {
       return this.targetFloor;
     }
   
-    // להוספת קומה לתור המעלית
     addToQueue(floor: number): void {
       if (this.queue.includes(floor)) {
-        return; // כבר קיימת בתור
+        return; 
       }
       
       this.queue.push(floor);
       
-      // אם המעלית במצב IDLE, התחל לנוע לכיוון הקומה הראשונה בתור
       if (this.state === ElevatorState.IDLE) {
-        this.moveToNextFloor();
+        this.nextFloorInQueue();
       }
     }
   
-    // לעדכון מצב המעלית בעת תנועה
-    moveToNextFloor(): void {
-      if (this.queue.length === 0) {
-        this.state = ElevatorState.IDLE;
-        this.direction = ElevatorDirection.NONE;
-        this.targetFloor = null;
-        return;
-      }
+    nextFloorInQueue(): void {
   
-      // בחירת הקומה הבאה מהתור
       this.targetFloor = this.queue[0];
       
-      // קביעת כיוון התנועה
       if (this.targetFloor > this.currentFloor) {
         this.direction = ElevatorDirection.UP;
       } else if (this.targetFloor < this.currentFloor) {
         this.direction = ElevatorDirection.DOWN;
       } else {
-        // המעלית כבר בקומה הדרושה
         this.arriveAtFloor();
         return;
       }
@@ -110,28 +100,24 @@ export enum ElevatorState {
       this.state = ElevatorState.MOVING;
     }
   
-    // עדכון מיקום המעלית בזמן תנועה
     updatePosition(): void {
       if (this.state !== ElevatorState.MOVING || this.targetFloor === null) {
         return;
       }
   
-      // התקדמות לכיוון היעד
       if (this.direction === ElevatorDirection.UP) {
         this.currentFloor++;
       } else if (this.direction === ElevatorDirection.DOWN) {
         this.currentFloor--;
       }
   
-      // בדיקה אם הגענו ליעד
       if (this.currentFloor === this.targetFloor) {
         this.arriveAtFloor();
       }
     }
   
-    // טיפול בהגעה לקומת היעד
     private arriveAtFloor(): void {
-      // Set to ARRIVING state first
+      // // Set to ARRIVING state first
       this.state = ElevatorState.ARRIVING;
       
       // Add a small delay before opening the doors to allow the animation to complete
@@ -150,25 +136,22 @@ export enum ElevatorState {
         // לאחר 2 שניות, המשך לקומה הבאה או חזור למצב IDLE
         setTimeout(() => {
           if (this.queue.length > 0) {
-            this.moveToNextFloor();
+            this.nextFloorInQueue();
           } else {
             this.state = ElevatorState.IDLE;
             this.direction = ElevatorDirection.NONE;
             this.targetFloor = null;
           }
           if (dingSound) dingSound.pause();
-        }, 2000);
-      }, 500); // 500ms delay to ensure the elevator visually arrives at the floor first
+        }, ELEVATOR_DOOR_OPEN_TIME);
+      }, ELEVATOR_SPEED); // 500ms delay to ensure the elevator visually arrives at the floor first
     }
   
-    // חישוב זמן משוער להגעה לקומה מסוימת (בשניות)
     estimateTimeToFloor(floor: number): number {
-      // אם המעלית במצב IDLE ואין קריאות בתור, חישוב ישיר
       if (this.state === ElevatorState.IDLE && this.queue.length === 0) {
-        return Math.abs(this.currentFloor - floor) * 0.5; // חצי שניה לקומה
+        return Math.abs(this.currentFloor - floor) * (ELEVATOR_SPEED / 1000); // המרת מילישניות לשניות
       }
   
-      // יצירת עותק של התור הנוכחי
       const queueCopy = [...this.queue];
       if (!queueCopy.includes(floor)) {
         queueCopy.push(floor);
@@ -178,30 +161,22 @@ export enum ElevatorState {
       let time = 0;
       let currentPos = this.currentFloor;
       
-      // אם המעלית במצב DOOR_OPEN, נוסיף 2 שניות לעיכוב
       if (this.state === ElevatorState.DOOR_OPEN) {
-        time += 2;
+        time += ELEVATOR_DOOR_OPEN_TIME / 1000; // המרת מילישניות לשניות
       }
       
-      // עבור על כל הקומות בתור לפי הסדר
       for (const nextFloor of queueCopy) {
-        // חישוב זמן הנסיעה לקומה הבאה
-        time += Math.abs(nextFloor - currentPos) * 0.5; // חצי שניה לקומה
+        time += Math.abs(nextFloor - currentPos) * (ELEVATOR_SPEED / 1000); // המרת מילישניות לשניות
         
-        // אם זו הקומה המבוקשת, סיימנו
         if (nextFloor === floor) {
           return time;
         }
         
-        // זמן עצירה בקומה
-        time += 2; // 2 שניות עיכוב בכל קומה
+        time += ELEVATOR_DOOR_OPEN_TIME / 1000; // המרת מילישניות לשניות
         
-        // עדכון המיקום הנוכחי
         currentPos = nextFloor;
       }
   
-      // מקרה חריג - אם הקומה המבוקשת לא נמצאה בסימולציה
-      // (לא אמור לקרות כי הוספנו את הקומה לתור)
-      return time + Math.abs(currentPos - floor) * 0.5;
+      return time;
     }
   }

@@ -1,13 +1,13 @@
+import { AbstractBuilding } from './AbstractBuilding';
 import { Elevator } from './Elevator';
 import { Floor } from './Floor';
 
-export class Building {
-  private id: number;
+export class Building extends AbstractBuilding {
   private floors: Floor[];
   private elevators: Elevator[];
 
   constructor(id: number, numFloors: number, numElevators: number) {
-    this.id = id;
+    super(id);
     
     // יצירת קומות
     this.floors = Array.from({ length: numFloors }, (_, index) => {
@@ -18,10 +18,6 @@ export class Building {
     this.elevators = Array.from({ length: numElevators }, (_, index) => {
       return new Elevator(index, 0);
     });
-  }
-
-  getId(): number {
-    return this.id;
   }
 
   getFloors(): Floor[] {
